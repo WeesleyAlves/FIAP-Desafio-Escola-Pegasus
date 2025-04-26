@@ -10,5 +10,7 @@ Para executar, utilizar os comandos no terminal:
 Rotas da aplicação até então:
 
 /students - lista todos;
+
 /students/numero_id - exibe com base no id;
+
 /students/search/nome - busca por nome;
