@@ -17,33 +17,61 @@ class StudentAdapter implements StudentsInput{
         private readonly SearchStudentsService $searchService,
     ){}
 
+    /**
+     * Lista todos os estudantes da aplicação.
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     */
     public function listStudents( Request $request, Response $response, array $args=[] ) : Response{
         $result = $this->listService->execute();
+        $statusCode = 400;
+        $arrayStudents = [];
 
-        $code = count( $result )  > 0  ? 200 : 400 ;
+        if( count( $result )  > 0 ){
+            foreach ($result as $key => $studentEntity) {
+                $arrayStudents[] = $studentEntity->toArray();
+            }
+        }
 
-        return $response->withJson($result)
-            ->withStatus($code)
+        return $response->withJson($arrayStudents)
+            ->withStatus($statusCode)
             ->withHeader('Content-Type', 'application/json');
     }
 
     public function searchByID( Request $request, Response $response, array $args=[] ) : Response{
         $result = $this->searchService->searchByID( $args['id'] );
+        $statusCode = 400;
+        $responseData = ['mensagem' => 'Estudante não encontrado.'];
 
-        $code = count( $result )  > 0  ? 200 : 400 ;
+        if( $result ){
+            $responseData = $result->toArray();
+            $statusCode = 200;
+        }
 
-        return $response->withJson($result)
-            ->withStatus($code)
+        return $response->withJson($responseData)
+            ->withStatus($statusCode)
             ->withHeader('Content-Type', 'application/json');
     }
 
     public function searchByName( Request $request, Response $response, array $args=[] ) : Response{
         $result = $this->searchService->searchByName( $args['name'] );
+        $statusCode = 400;
+        $responseData = ['mensagem' => 'Nenhum estudante encontrado.'];
 
-        $code = count( $result )  > 0  ? 200 : 400 ;
+        if( count( $result )  > 0 ){
+            $responseData = [];
+            $statusCode = 200;
 
-        return $response->withJson($result)
-            ->withStatus($code)
+            foreach ($result as $key => $studentEntity) {
+                $responseData[] = $studentEntity->toArray();
+            }
+        }
+
+        return $response->withJson($responseData)
+            ->withStatus($statusCode)
             ->withHeader('Content-Type', 'application/json');
     }
 }

@@ -1,33 +1,64 @@
 <?php
 namespace Src\Adapters\Driven\Database\Repository;
 
+use Src\Core\Domain\Students\Entities\StudentEntity;
 use Src\Core\Domain\Students\Ports\StudentsOutputPort;
 
 class StudentsFixedRepository implements StudentsOutputPort{
     private array $students = [
-        ['id' => 1, 'name' => 'Mary Doe', 'age' => 20],
-        ['id' => 2, 'name' => 'Jane Smith', 'age' => 22],
-        ['id' => 3, 'name' => 'Sam Brown', 'age' => 19],
+        ['id' => 1, 'name' => 'Mary Doe', 'email' => 'mary@doe.com.br', 'address' => 'Rua X, nº Y Bairro Z'],
+        ['id' => 2, 'name' => 'Jane Smith', 'email' => 'jane@smith.com.br', 'address' => 'Rua A, nº C Bairro E'],
+        ['id' => 3, 'name' => 'Sam Brown', 'email' => 'sam@brown.com.br', 'address' => 'Rua B, nº D Bairro F'],
     ];
 
-    public function listAll(): array {
-        return $this->students;
+    /**
+     * Recupera todos os estudantes do banco.
+     *
+     * @return StudentEntity[]
+     */
+    public function getAll(): array {
+        $studentsArray = [];
+
+        foreach ( $this->students as $key => $studentData) {
+            $studentsArray[] = StudentEntity::fromArray( $studentData );
+        }
+
+        return $studentsArray;
     }
 
+    /**
+     * Busca estudantes por nome
+     *
+     * @param string $name
+     * @return StudentEntity[]
+     */
     public function searchByName(string $name): array {
-        return array_filter($this->students, function($student) use ($name) {
-            return stripos($student['name'], $name) !== false;
-        });
+        $foundStudents = [];
+
+        foreach ( $this->students as $key => $studentData ) {
+            if( stripos($studentData['name'], $name) ){
+                $foundStudents[] = StudentEntity::fromArray( $studentData );
+            }
+        }
+
+        return $foundStudents;
     }
 
-    public function searchByID(int $id): array {
-        foreach ($this->students as $student) {
-            if ($student['id'] === $id) {
-                return $student;
+    /**
+     * Busca estudantes por ID
+     *
+     * @param string $name
+     * @return ?StudentEntity
+     */
+    public function searchByID(int $id): ?StudentEntity {
+
+        foreach ($this->students as $studentData) {
+            if ($studentData['id'] === $id) {
+                return StudentEntity::fromArray( $studentData );
             }
         }
         
-        return [];
+        return null;
     }
 }
 
