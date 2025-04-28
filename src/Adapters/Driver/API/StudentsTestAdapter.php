@@ -9,7 +9,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Src\Core\Application\Students\Ports\StudentsInput;
 
 
-class StudentsTestAdapter implements StudentsInput{
+class StudentsTestAdapter{
     public function listStudents( Request $request, Response $response, array $args=[] ): Response {
         return $response->withJson([])
             ->withStatus(200)
@@ -27,7 +27,6 @@ class StudentsTestAdapter implements StudentsInput{
             ->withStatus(200)
             ->withHeader('Content-Type', 'application/json');
     }
-
 }
 
 ?>

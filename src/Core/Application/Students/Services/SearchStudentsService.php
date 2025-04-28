@@ -3,9 +3,11 @@
 namespace Src\Core\Application\Students\Services;
 
 use Src\Core\Domain\Students\Entities\StudentEntity;
-use Src\Core\Domain\Students\Ports\StudentsOutputPort;
 
-class SearchStudentsService{
+use Src\Core\Domain\Students\OutputPorts\StudentsOutputPort;
+use Src\Core\Application\Students\InputPorts\SearchStudentsPort;
+
+class SearchStudentsService implements SearchStudentsPort{
     public function __construct( private readonly StudentsOutputPort $studentRepository ){}
 
     /**

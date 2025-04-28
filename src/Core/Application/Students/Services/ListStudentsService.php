@@ -3,10 +3,11 @@
 namespace Src\Core\Application\Students\Services;
 
 use Src\Core\Domain\Students\Entities\StudentEntity;
-use Src\Core\Domain\Students\Ports\StudentsOutputPort;
+use Src\Core\Domain\Students\OutputPorts\StudentsOutputPort;
+use Src\Core\Application\Students\InputPorts\ListStudentsPort;
 
 
-class ListStudentsService{
+class ListStudentsService implements ListStudentsPort{
     public function __construct( private readonly StudentsOutputPort $studentRepository ){}
 
     /**
@@ -14,7 +15,7 @@ class ListStudentsService{
      *
      * @return StudentEntity[]
      */
-    public function execute(): array{
+    public function listStudents(): array{
         return $this->studentRepository->getAll();
     }
 } 

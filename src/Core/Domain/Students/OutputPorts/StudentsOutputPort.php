@@ -1,5 +1,5 @@
 <?php
-namespace Src\Core\Domain\Students\Ports;
+namespace Src\Core\Domain\Students\OutputPorts;
 
 use Src\Core\Domain\Students\Entities\StudentEntity;
 

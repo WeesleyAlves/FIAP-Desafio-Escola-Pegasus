@@ -11,7 +11,7 @@ use Src\Core\Application\Students\Services\ListStudentsService;
 use Src\Core\Application\Students\Services\SearchStudentsService;
 
 
-class StudentAdapter implements StudentsInput{
+class StudentAdapter{
     public function __construct(
         private readonly ListStudentsService $listService,
         private readonly SearchStudentsService $searchService,
@@ -26,7 +26,7 @@ class StudentAdapter implements StudentsInput{
      * @return Response
      */
     public function listStudents( Request $request, Response $response, array $args=[] ) : Response{
-        $result = $this->listService->execute();
+        $result = $this->listService->listStudents();
         $statusCode = 400;
         $arrayStudents = [];
 
@@ -41,6 +41,14 @@ class StudentAdapter implements StudentsInput{
             ->withHeader('Content-Type', 'application/json');
     }
 
+    /**
+     * Busca estudante por ID
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     */
     public function searchByID( Request $request, Response $response, array $args=[] ) : Response{
         $result = $this->searchService->searchByID( $args['id'] );
         $statusCode = 400;
@@ -56,6 +64,14 @@ class StudentAdapter implements StudentsInput{
             ->withHeader('Content-Type', 'application/json');
     }
 
+    /**
+     * Busca estudante por nome
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     */
     public function searchByName( Request $request, Response $response, array $args=[] ) : Response{
         $result = $this->searchService->searchByName( $args['name'] );
         $statusCode = 400;

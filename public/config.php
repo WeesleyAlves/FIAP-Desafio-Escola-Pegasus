@@ -3,18 +3,18 @@
 use DI\Container;
 use Slim\Factory\AppFactory;
 
-use Src\Adapters\Driver\API\StudentsTestAdapter;
 use Src\Adapters\Driver\API\StudentAdapter;
+use Src\Adapters\Driver\API\StudentsTestAdapter;
 use Src\Core\Application\Students\Ports\StudentsInput;
-use Src\Core\Domain\Students\Ports\StudentsOutputPort;
+use Src\Core\Domain\Students\OutputPorts\StudentsOutputPort;
 use Src\Core\Application\Students\Services\ListStudentsService;
 use Src\Core\Application\Students\Services\SearchStudentsService;
-use Src\Adapters\Driven\Database\Repository\StudentsFixedRepository;
+use Src\Adapters\Driven\Database\Repository\StudentsMemRepository;
 
 $container = new Container();
 
 $container->set( StudentsOutputPort::class , function() {
-    return new StudentsFixedRepository();
+    return new StudentsMemRepository();
 });
 
 $container->set( ListStudentsService::class , function( Container $container ) {
