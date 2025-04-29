@@ -5,7 +5,7 @@ use Slim\Factory\AppFactory;
 
 use Src\Adapters\Driver\API\StudentAdapter;
 use Src\Adapters\Driver\API\StudentsTestAdapter;
-use Src\Core\Application\Students\Ports\StudentsInput;
+
 use Src\Core\Domain\Students\OutputPorts\StudentsOutputPort;
 use Src\Core\Application\Students\Services\ListStudentsService;
 use Src\Core\Application\Students\Services\SearchStudentsService;
@@ -26,7 +26,7 @@ $container->set( SearchStudentsService::class , function( Container $container )
 });
 
 
-$container->set( StudentsInput::class , function( Container $container ) {
+$container->set( StudentAdapter::class , function( Container $container ) {
     // return new StudentsTestAdapter();
 
     return new StudentAdapter( 
