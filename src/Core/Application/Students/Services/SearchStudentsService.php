@@ -4,11 +4,11 @@ namespace Src\Core\Application\Students\Services;
 
 use Src\Core\Domain\Students\Entities\StudentEntity;
 
-use Src\Core\Domain\Students\OutputPorts\StudentsOutputPort;
-use Src\Core\Application\Students\InputPorts\SearchStudentsPort;
+use Src\Core\Domain\Students\OutputPorts\StudentsRepositoryPort;
+use Src\Core\Application\Students\InputPorts\SearchStudentsServicePort;
 
-class SearchStudentsService implements SearchStudentsPort{
-    public function __construct( private readonly StudentsOutputPort $studentRepository ){}
+class SearchStudentsService implements SearchStudentsServicePort{
+    public function __construct( private readonly StudentsRepositoryPort $studentRepository ){}
 
     /**
      * Busca estudantes pelo nome;

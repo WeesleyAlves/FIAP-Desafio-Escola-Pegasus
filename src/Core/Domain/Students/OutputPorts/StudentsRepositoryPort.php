@@ -3,7 +3,7 @@ namespace Src\Core\Domain\Students\OutputPorts;
 
 use Src\Core\Domain\Students\Entities\StudentEntity;
 
-interface StudentsOutputPort{
+interface StudentsRepositoryPort{
     /**
      * Lista todos os studantes
      *

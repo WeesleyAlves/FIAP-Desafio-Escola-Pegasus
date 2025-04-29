@@ -8,7 +8,7 @@ use Src\Core\Application\Students\Services\ListStudentsService;
 use Src\Core\Application\Students\Services\SearchStudentsService;
 
 
-interface ListStudentsPort{
+interface ListStudentsServicePort{
     /**
      * Lista todos os estudantes
      *

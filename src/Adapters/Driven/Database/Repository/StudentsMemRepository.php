@@ -2,11 +2,11 @@
 namespace Src\Adapters\Driven\Database\Repository;
 
 use Src\Core\Domain\Students\Entities\StudentEntity;
-use Src\Core\Domain\Students\OutputPorts\StudentsOutputPort;
+use Src\Core\Domain\Students\OutputPorts\StudentsRepositoryPort;
 
 
 
-class StudentsMemRepository implements StudentsOutputPort{
+class StudentsMemRepository implements StudentsRepositoryPort{
     private array $students = [
         ['id' => 1, 'name' => 'Mary Doe', 'email' => 'mary@doe.com.br', 'address' => 'Rua X, nº Y Bairro Z'],
         ['id' => 2, 'name' => 'Jane Smith', 'email' => 'jane@smith.com.br', 'address' => 'Rua A, nº C Bairro E'],

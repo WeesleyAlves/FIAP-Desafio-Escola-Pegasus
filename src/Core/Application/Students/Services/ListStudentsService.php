@@ -3,12 +3,12 @@
 namespace Src\Core\Application\Students\Services;
 
 use Src\Core\Domain\Students\Entities\StudentEntity;
-use Src\Core\Domain\Students\OutputPorts\StudentsOutputPort;
-use Src\Core\Application\Students\InputPorts\ListStudentsPort;
+use Src\Core\Domain\Students\OutputPorts\StudentsRepositoryPort;
+use Src\Core\Application\Students\InputPorts\ListStudentsServicePort;
 
 
-class ListStudentsService implements ListStudentsPort{
-    public function __construct( private readonly StudentsOutputPort $studentRepository ){}
+class ListStudentsService implements ListStudentsServicePort{
+    public function __construct( private readonly StudentsRepositoryPort $studentRepository ){}
 
     /**
      * Executa o comportamento do serviço
