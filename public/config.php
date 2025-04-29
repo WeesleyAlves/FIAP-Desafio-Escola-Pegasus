@@ -6,23 +6,23 @@ use Slim\Factory\AppFactory;
 use Src\Adapters\Driver\API\StudentAdapter;
 use Src\Adapters\Driver\API\StudentsTestAdapter;
 
-use Src\Core\Domain\Students\OutputPorts\StudentsOutputPort;
+use Src\Core\Domain\Students\OutputPorts\StudentsRepositoryPort;
 use Src\Core\Application\Students\Services\ListStudentsService;
 use Src\Core\Application\Students\Services\SearchStudentsService;
 use Src\Adapters\Driven\Database\Repository\StudentsMemRepository;
 
 $container = new Container();
 
-$container->set( StudentsOutputPort::class , function() {
+$container->set( StudentsRepositoryPort::class , function() {
     return new StudentsMemRepository();
 });
 
 $container->set( ListStudentsService::class , function( Container $container ) {
-    return new ListStudentsService( $container->get( StudentsOutputPort::class ) );
+    return new ListStudentsService( $container->get( StudentsRepositoryPort::class ) );
 });
 
 $container->set( SearchStudentsService::class , function( Container $container ) {
-    return new SearchStudentsService( $container->get( StudentsOutputPort::class ) );
+    return new SearchStudentsService( $container->get( StudentsRepositoryPort::class ) );
 });
 
 
