@@ -31,6 +31,8 @@ class StudentAdapter{
         $arrayStudents = [];
 
         if( count( $result )  > 0 ){
+            $statusCode = 200; 
+            
             foreach ($result as $key => $studentEntity) {
                 $arrayStudents[] = $studentEntity->toArray();
             }
