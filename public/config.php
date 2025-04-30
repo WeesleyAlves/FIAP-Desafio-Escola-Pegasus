@@ -4,16 +4,20 @@ use DI\Container;
 
 use Slim\Factory\AppFactory;
 
+use Src\Adapters\Driver\API\CourseAdapter;
 use Src\Adapters\Driver\API\StudentAdapter;
+
 use Src\Adapters\Driver\API\StudentsTestAdapter;
+use Src\Core\Application\Courses\Services\ListCousersService;
 
-use Src\Adapters\Driven\Database\Repository\StudentsDBRepository;
-use Src\Adapters\Driven\Database\Repository\StudentsMemRepository;
-
+use Src\Core\Domain\Courses\OutputPorts\CourseRepositoryPort;
 use Src\Core\Application\Students\Services\ListStudentsService;
-use Src\Core\Application\Students\Services\SearchStudentsService;
 
+use Src\Adapters\Driven\Database\Repository\CoursesDBRepository;
 use Src\Core\Domain\Students\OutputPorts\StudentsRepositoryPort;
+use Src\Adapters\Driven\Database\Repository\StudentsDBRepository;
+use Src\Core\Application\Students\Services\SearchStudentsService;
+use Src\Adapters\Driven\Database\Repository\StudentsMemRepository;
 
 
 $container = new Container();
@@ -40,6 +44,18 @@ $container->set( StudentAdapter::class , function( Container $container ) {
         $container->get( ListStudentsService::class ),
         $container->get( SearchStudentsService::class ),
     );
+});
+
+$container->set( CourseRepositoryPort::class , function( Container $container ) {
+    return new CoursesDBRepository( $container->get('pdo_connection') );
+});
+
+$container->set( ListCousersService::class , function( Container $container ) {
+    return new ListCousersService( $container->get( CourseRepositoryPort::class ) );
+});
+
+$container->set( CourseAdapter::class , function( Container $container ) {
+    return new CourseAdapter( $container->get( ListCousersService::class ) );
 });
 
 $container->set( 'pdo_connection', function() {
