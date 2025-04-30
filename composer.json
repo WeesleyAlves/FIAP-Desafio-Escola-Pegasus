@@ -1,0 +1,17 @@
+{
+    "name": "fiap/escola-pegasus-2",
+    "description": "Projeto de desafio de arquitetura hexagonal",
+    "autoload": {
+        "psr-4": {
+            "Src\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.0",
+        "slim/slim": "^4.14",
+        "httpsoft/http-message": "^1.1",
+        "httpsoft/http-server-request": "^1.1",
+        "slim/http": "^1.4",
+        "php-di/slim-bridge": "^3.4"
+    }
+}
