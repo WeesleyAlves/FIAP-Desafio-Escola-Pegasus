@@ -3,6 +3,7 @@ namespace Src\Core\Students\Application\Services;
 
 use Src\Core\Students\Domain\Entities\ContactEntity;
 use Src\Core\Students\Domain\Entities\StudentEntity;
+use Src\Core\Students\Application\DTOs\CreateStudentDTO;
 use Src\Core\Students\Domain\Entities\AcademicHistoryEntity;
 use Src\Core\Students\Domain\ValueObjects\AcademicRegistryOV;
 use Src\Core\Students\Application\InputPorts\CreateStudentServicePort;
@@ -19,18 +20,18 @@ class CreateStudentService implements CreateStudentServicePort{
      * @param integer $courseId
      * @return StudentEntity
      */
-    public function execute( string $name, string $phone, string $email, int $courseId ): StudentEntity{        
+    public function execute( CreateStudentDTO $dto ): StudentEntity{        
         // TODO: adicionar conexão com o banco pra criar as coisas e adicionar o que ta abaixo na entity do estudante;
         // private string $createdAt; -- banco
         // private string $modifiedAt; -- banco
 
         $academicRegistry = AcademicRegistryOV::generate();
 
-        $contact = ContactEntity::create( $academicRegistry, $phone, $email );
+        $contact = ContactEntity::create( $academicRegistry, $dto->getPhone(), $dto->getEmail() );
 
-        $academicHistory = AcademicHistoryEntity::create( $academicRegistry, $courseId );
+        $academicHistory = AcademicHistoryEntity::create( $academicRegistry, $dto->getCourseId() );
 
-        $student = StudentEntity::create( $name, $academicRegistry );
+        $student = StudentEntity::create( $dto->getName(), $academicRegistry );
         $student->setContact( $contact );
         $student->setAcademicHistory( $academicHistory );
 

@@ -2,6 +2,7 @@
 namespace Src\Core\Students\Application\InputPorts;
 
 use Src\Core\Students\Domain\Entities\StudentEntity;
+use Src\Core\Students\Application\DTOs\CreateStudentDTO;
 
 
 interface CreateStudentServicePort{
@@ -10,6 +11,6 @@ interface CreateStudentServicePort{
      *
      * @return array
      */
-    public function execute( string $name, string $phone, string $email, int $courseId ): StudentEntity;
+    public function execute( CreateStudentDTO $dto ): StudentEntity;
 }
 ?>

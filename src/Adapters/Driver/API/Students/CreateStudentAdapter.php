@@ -4,6 +4,7 @@ namespace Src\Adapters\Driver\API\Students;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Src\Core\Students\Application\DTOs\CreateStudentDTO;
 use Src\Core\Students\Application\InputPorts\CreateStudentServicePort;
 
 class CreateStudentAdapter {
@@ -16,12 +17,14 @@ class CreateStudentAdapter {
 
         $body = $request->getParsedBody();
 
-        $student = $this->service->execute(
-            $body['name'],
-            $body['phone'],
-            $body['email'],
-            $body['courseId'],
+        $dto = new CreateStudentDTO(
+            $body['name'] ?? '',
+            $body['phone'] ?? '',
+            $body['email'] ?? '',
+            $body['courseId'] ?? '',
         );
+
+        $student = $this->service->execute( $dto );
 
         if( $student ){
             $message = 'Estudante criado com sucesso!';
