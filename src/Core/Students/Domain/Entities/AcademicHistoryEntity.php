@@ -45,14 +45,14 @@ class AcademicHistoryEntity{
     }
 
     public static function create( string $studentAcademicRegistry, int $courseId ): self{
-        $instace = new self();
+        $instance = new self();
 
         $instance->studentAcademicRegistry = $studentAcademicRegistry;
         $instance->courseId = $courseId;
         $instance->score = 0;
         $instance->frequency = 0;
 
-        return $instace;
+        return $instance;
     }
 }
 

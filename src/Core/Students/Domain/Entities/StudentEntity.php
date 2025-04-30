@@ -71,6 +71,29 @@ class StudentEntity{
 
         return $instace;
     }
+
+    /**
+     * Set the value of contact
+     *
+     * @return  self
+     */ 
+    public function setContact(ContactEntity $contact){
+        $this->contact = $contact;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of academicHistory
+     *
+     * @return  self
+     */ 
+    public function setAcademicHistory(AcademicHistoryEntity $academicHistory)
+    {
+        $this->academicHistory = $academicHistory;
+
+        return $this;
+    }
 }
 
 ?>

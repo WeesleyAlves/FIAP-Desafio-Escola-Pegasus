@@ -28,9 +28,10 @@ class ContactEntity {
         return $this->studentAcademicRegistry;
     }
 
-    public static function create( string $phone, string $email ): self{
+    public static function create( string $studentAcademicRegistry, string $phone, string $email ): self{
         $instace = new self();
 
+        $instace->studentAcademicRegistry = $studentAcademicRegistry;
         $instace->email = $email;
         $instace->phone = $phone;
 
