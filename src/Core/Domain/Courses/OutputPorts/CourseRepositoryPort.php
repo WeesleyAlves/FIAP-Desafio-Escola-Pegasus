@@ -12,6 +12,20 @@ interface CourseRepositoryPort{
      * @return CourseEntity[]
      */
     public function getAll(): array;
+
+    /**
+     * Busca um curso por id
+     *
+     * @return ?CourseEntity
+     */
+    public function getByID(int $id): ?CourseEntity;
+
+    /**
+     * Busca um curso por id
+     *
+     * @return CourseEntity[]
+     */
+    public function getByName(string $name): array;
 }
 
 ?>

@@ -8,11 +8,12 @@ use Src\Adapters\Driver\API\CourseAdapter;
 use Src\Adapters\Driver\API\StudentAdapter;
 
 use Src\Adapters\Driver\API\StudentsTestAdapter;
-use Src\Core\Application\Courses\Services\ListCousersService;
 
+use Src\Core\Application\Courses\Services\ListCoursesService;
 use Src\Core\Domain\Courses\OutputPorts\CourseRepositoryPort;
-use Src\Core\Application\Students\Services\ListStudentsService;
 
+use Src\Core\Application\Courses\Services\SearchCoursesService;
+use Src\Core\Application\Students\Services\ListStudentsService;
 use Src\Adapters\Driven\Database\Repository\CoursesDBRepository;
 use Src\Core\Domain\Students\OutputPorts\StudentsRepositoryPort;
 use Src\Adapters\Driven\Database\Repository\StudentsDBRepository;
@@ -50,12 +51,19 @@ $container->set( CourseRepositoryPort::class , function( Container $container ) 
     return new CoursesDBRepository( $container->get('pdo_connection') );
 });
 
-$container->set( ListCousersService::class , function( Container $container ) {
-    return new ListCousersService( $container->get( CourseRepositoryPort::class ) );
+$container->set( ListCoursesService::class , function( Container $container ) {
+    return new ListCoursesService( $container->get( CourseRepositoryPort::class ) );
+});
+
+$container->set( SearchCoursesService::class , function( Container $container ) {
+    return new SearchCoursesService( $container->get( CourseRepositoryPort::class ) );
 });
 
 $container->set( CourseAdapter::class , function( Container $container ) {
-    return new CourseAdapter( $container->get( ListCousersService::class ) );
+    return new CourseAdapter( 
+        $container->get( ListCoursesService::class ) ,
+        $container->get( SearchCoursesService::class ) ,
+    );
 });
 
 $container->set( 'pdo_connection', function() {

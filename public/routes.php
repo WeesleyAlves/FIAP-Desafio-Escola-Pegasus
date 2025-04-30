@@ -28,5 +28,13 @@ $app->get('/courses', function (Request $request, Response $response, $args) {
     return $this->get(CourseAdapter::class)->listCourses( $request, $response, $args );
 });
 
+$app->get('/courses/search/{name}', function (Request $request, Response $response, $args) {
+    return $this->get(CourseAdapter::class)->searchByName( $request, $response, $args );
+});
+
+$app->get('/courses/{id}', function (Request $request, Response $response, $args) {
+    return $this->get(CourseAdapter::class)->searchByID( $request, $response, $args );
+});
+
 
 ?>

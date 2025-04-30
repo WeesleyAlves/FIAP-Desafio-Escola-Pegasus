@@ -7,7 +7,7 @@ use Src\Core\Domain\Courses\OutputPorts\CourseRepositoryPort;
 use Src\Core\Application\Courses\InputPorts\ListCourseServicePort;
 
 
-class ListCousersService implements ListCourseServicePort {
+class ListCoursesService implements ListCourseServicePort {
     public function __construct( private readonly CourseRepositoryPort $courseRepository ) {}
 
     /**
