@@ -62,6 +62,15 @@ class StudentEntity{
     public function getAcademicHistory(){
         return $this->academicHistory;
     }
+
+    public static function create( string $name, string $academicRegistry ): self{
+        $instace = new self();
+
+        $instace->academicRegistry = $academicRegistry;
+        $instace->name = $name;
+
+        return $instace;
+    }
 }
 
 ?>

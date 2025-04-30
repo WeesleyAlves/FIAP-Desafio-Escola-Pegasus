@@ -24,9 +24,17 @@ class ContactEntity {
     /**
      * Get the value of studentAcademicRegistry
      */ 
-    public function getStudentAcademicRegistry()
-    {
+    public function getStudentAcademicRegistry(){
         return $this->studentAcademicRegistry;
+    }
+
+    public static function create( string $phone, string $email ): self{
+        $instace = new self();
+
+        $instace->email = $email;
+        $instace->phone = $phone;
+
+        return $instace;
     }
 }
 
