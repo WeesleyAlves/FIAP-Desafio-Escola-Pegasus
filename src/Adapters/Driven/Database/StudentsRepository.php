@@ -110,13 +110,18 @@ class StudentsRepository implements StudentsRepositoryPort{
 
     /**
      * Deleta estudante e seus dados com base no RA;
+     * Rola um DELETE ON CASCADE no banco...
      *
      * @param string $registryAcademic
      * @return boolean
      */
     public function deleteSudent( string $registryAcademic ): bool {
+        $stmt = $this->pdo->prepare( "DELETE FROM students WHERE academic_registry = ?" );
+        $stmt->execute([$registryAcademic]);
 
-        // $stmt = $this->pdo->prepare( 'DELETE FROM ' );
+        if( $stmt->rowCount() ){
+            return true;
+        }
 
         return false;
     }
