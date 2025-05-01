@@ -30,7 +30,7 @@ class StudentsRepository implements StudentsRepositoryPort{
             $student->setId( $id );
 
             $stmt = $this->pdo->prepare("SELECT created_at from students WHERE id = ?");
-            $result = $stmt->execute([ $id ]);
+            $stmt->execute([ $id ]);
             
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -41,6 +41,26 @@ class StudentsRepository implements StudentsRepositoryPort{
         }
 
         return $student;
+    }
+
+    /**
+     * Busca estudantes por nome;
+     *
+     * @return StudentEntity[]
+     */
+    public function searchStudentsByName( string $name ): array {
+        $students = [];
+
+        $stmt = $this->pdo->prepare("SELECT * from students WHERE name LIKE ? ORDER BY name");
+        $stmt->execute([ '%'.$name.'%' ]);
+
+        $results = $stmt->fetchAll();
+
+        foreach ($results as $key => $student) {
+            $students[] = StudentEntity::fromArray( $student );
+        }
+
+        return $students;
     }
 
     /**

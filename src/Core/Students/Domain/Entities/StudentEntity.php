@@ -129,6 +129,26 @@ class StudentEntity{
 
         return $this;
     }
+
+    public static function fromArray(array $data): self{
+        $instance = new self();
+
+        $instance->id = $data['id'] ?? '';
+        $instance->academicRegistry = $data['academic_registry'] ?? '';
+        $instance->name = $data['name'] ?? '';
+        $instance->createdAt = $data['created_at'] ?? '';
+        $instance->modifiedAt = $data['modified_at'] ?? '';
+
+        if( isset( $data['contact'] ) ){
+            $instance->contact = $data['contact'];
+        }
+        
+        if( isset( $data['academic_history'] ) ){
+            $instance->academicHistory = $data['academic_history'];
+        }
+    
+        return $instance;
+    }
 }
 
 ?>

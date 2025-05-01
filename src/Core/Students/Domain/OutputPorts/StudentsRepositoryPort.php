@@ -15,6 +15,13 @@ interface StudentsRepositoryPort {
     public function storeStudent( StudentEntity $student ): StudentEntity;
 
     /**
+     * Busca estudantes por nome;
+     *
+     * @return StudentEntity[]
+     */
+    public function searchStudentsByName( string $name ): array;
+
+    /**
      * Armazena um novo contato e retorna um contato completo;
      *
      * @param ContactEntity $contact

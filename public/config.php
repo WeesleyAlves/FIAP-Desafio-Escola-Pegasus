@@ -5,8 +5,10 @@ use DI\Container;
 use Slim\Factory\AppFactory;
 use Src\Adapters\Driven\Database\StudentsRepository;
 use Src\Core\Students\Application\Services\CreateStudentService;
+use Src\Core\Students\Application\Services\SearchStudentService;
 use Src\Core\Students\Domain\OutputPorts\StudentsRepositoryPort;
 use Src\Core\Students\Application\InputPorts\CreateStudentServicePort;
+use Src\Core\Students\Application\InputPorts\SearchStudentServicePort;
 
 $container = new Container();
 
@@ -18,6 +20,10 @@ $container = new Container();
 
 $container->set( CreateStudentServicePort::class , function( Container $container ) {
     return new CreateStudentService( $container->get( StudentsRepositoryPort::class ) );
+});
+
+$container->set( SearchStudentServicePort::class , function( Container $container ) {
+    return new SearchStudentService( $container->get( StudentsRepositoryPort::class ) );
 });
 
 $container->set( StudentsRepositoryPort::class , function( Container $container ) {
