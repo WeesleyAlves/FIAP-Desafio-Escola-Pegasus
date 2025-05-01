@@ -31,8 +31,10 @@ class CreateStudentAdapter {
             $statusCode = 200;
 
             $responseData = array(
+                'id' => $student->getId(),
                 'registroAcademico' => $student->getAcademicRegistry(),
                 'nome' => $student->getName(),
+                'criadoEm' => $student->getCreatedAt(),
             );
         }
 

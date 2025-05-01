@@ -7,17 +7,17 @@ use Src\Core\Students\Application\DTOs\CreateStudentDTO;
 use Src\Core\Students\Domain\Entities\AcademicHistoryEntity;
 use Src\Core\Students\Domain\ValueObjects\AcademicRegistryOV;
 use Src\Core\Students\Application\InputPorts\CreateStudentServicePort;
+use Src\Core\Students\Domain\OutputPorts\StudentsRepositoryPort;
 
 
 
 class CreateStudentService implements CreateStudentServicePort{
+    public function __construct( private readonly StudentsRepositoryPort $studentRepository ) {}
+
     /**
-     * Executa a criação e armazenamento de um estudante ao banco de dados;
+     * Executa a criação e armazenamento de um estudante e suas devidas dependencias ao banco de dados;
      *
-     * @param string $name
-     * @param string $phone
-     * @param string $email
-     * @param integer $courseId
+     * @param CreateStudentDTO $dto
      * @return StudentEntity
      */
     public function execute( CreateStudentDTO $dto ): StudentEntity{        
@@ -31,11 +31,17 @@ class CreateStudentService implements CreateStudentServicePort{
 
         $academicHistory = AcademicHistoryEntity::create( $academicRegistry, $dto->getCourseId() );
 
+        $contact = $this->studentRepository->storeContact( $contact );
+        $academicHistory = $this->studentRepository->storeAcademicHistory( $academicHistory );
+
         $student = StudentEntity::create( $dto->getName(), $academicRegistry );
         $student->setContact( $contact );
         $student->setAcademicHistory( $academicHistory );
 
+        $student = $this->studentRepository->storeStudent( $student );
+
         return $student;
     }
 }
+
 ?>

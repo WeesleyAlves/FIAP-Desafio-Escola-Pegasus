@@ -94,6 +94,41 @@ class StudentEntity{
 
         return $this;
     }
+
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */ 
+    public function setId($id){
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of modifiedAt
+     *
+     * @return  self
+     */ 
+    public function setModifiedAt($modifiedAt)
+    {
+        $this->modifiedAt = $modifiedAt;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of createdAt
+     *
+     * @return  self
+     */ 
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
 }
 
 ?>

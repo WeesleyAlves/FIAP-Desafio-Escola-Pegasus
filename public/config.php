@@ -3,7 +3,9 @@
 use DI\Container;
 
 use Slim\Factory\AppFactory;
+use Src\Adapters\Driven\Database\StudentsRepository;
 use Src\Core\Students\Application\Services\CreateStudentService;
+use Src\Core\Students\Domain\OutputPorts\StudentsRepositoryPort;
 use Src\Core\Students\Application\InputPorts\CreateStudentServicePort;
 
 $container = new Container();
@@ -15,7 +17,11 @@ $container = new Container();
 // });
 
 $container->set( CreateStudentServicePort::class , function( Container $container ) {
-    return new CreateStudentService();
+    return new CreateStudentService( $container->get( StudentsRepositoryPort::class ) );
+});
+
+$container->set( StudentsRepositoryPort::class , function( Container $container ) {
+    return new StudentsRepository( $container->get( 'pdo_connection' ) );
 });
 
 $container->set( 'pdo_connection', function() {
