@@ -26,11 +26,8 @@ class StudentsRepository implements StudentsRepositoryPort{
         ]);
 
         if( $created ){
-            $id = $this->pdo->lastInsertId();
-            $student->setId( $id );
-
-            $stmt = $this->pdo->prepare("SELECT created_at from students WHERE id = ?");
-            $stmt->execute([ $id ]);
+            $stmt = $this->pdo->prepare("SELECT created_at from students WHERE academic_registry = ?");
+            $stmt->execute([ $student->getAcademicRegistry() ]);
             
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -109,6 +106,19 @@ class StudentsRepository implements StudentsRepositoryPort{
         }
 
         return $academicHistory;
+    }
+
+    /**
+     * Deleta estudante e seus dados com base no RA;
+     *
+     * @param string $registryAcademic
+     * @return boolean
+     */
+    public function deleteSudent( string $registryAcademic ): bool {
+
+        // $stmt = $this->pdo->prepare( 'DELETE FROM ' );
+
+        return false;
     }
 }
 ?>

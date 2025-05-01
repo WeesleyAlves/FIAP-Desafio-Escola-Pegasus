@@ -36,6 +36,14 @@ interface StudentsRepositoryPort {
      * @return AcademicHistoryEntity
      */
     public function storeAcademicHistory( AcademicHistoryEntity $academicHistory ): AcademicHistoryEntity;
+
+    /**
+     * Deleta estudante e seus dados com base no RA;
+     *
+     * @param string $registryAcademic
+     * @return boolean
+     */
+    public function deleteSudent( string $registryAcademic ): bool;
 }
 
 ?>

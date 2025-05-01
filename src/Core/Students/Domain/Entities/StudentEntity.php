@@ -6,20 +6,12 @@ use Src\Core\Students\Domain\Entities\AcademicHistoryEntity;
 
 
 class StudentEntity{
-    private int $id;
     private string $academicRegistry;
     private string $name;
     private string $createdAt;
     private string $modifiedAt;
     private ContactEntity $contact;
     private AcademicHistoryEntity $academicHistory;
-
-    /**
-     * Get the value of id
-     */ 
-    public function getId(){
-        return $this->id;
-    }
 
     /**
      * Get the value of academicRegistry
@@ -96,17 +88,6 @@ class StudentEntity{
     }
 
     /**
-     * Set the value of id
-     *
-     * @return  self
-     */ 
-    public function setId($id){
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
      * Set the value of modifiedAt
      *
      * @return  self
@@ -133,7 +114,6 @@ class StudentEntity{
     public static function fromArray(array $data): self{
         $instance = new self();
 
-        $instance->id = $data['id'] ?? '';
         $instance->academicRegistry = $data['academic_registry'] ?? '';
         $instance->name = $data['name'] ?? '';
         $instance->createdAt = $data['created_at'] ?? '';

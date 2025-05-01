@@ -2,15 +2,18 @@
 namespace Src\Adapters\Driver\API\Students;
 
 use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
 
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Src\Core\Students\Application\DTOs\CreateStudentDTO;
 use Src\Core\Students\Application\InputPorts\CreateStudentServicePort;
+use Src\Core\Students\Application\InputPorts\DeleteStudentServicePort;
 use Src\Core\Students\Application\InputPorts\SearchStudentServicePort;
 
 class StudentAdapter {
     public function __construct(
         private readonly CreateStudentServicePort $createService,
         private readonly SearchStudentServicePort $searchService,
+        private readonly DeleteStudentServicePort $deleteService,
     ) {}
 
     /**
@@ -34,14 +37,13 @@ class StudentAdapter {
             $body['courseId'] ?? '',
         );
 
-        $student = $this->service->execute( $dto );
+        $student = $this->createService->execute( $dto );
 
         if( $student ){
             $message = 'Estudante criado com sucesso!';
             $statusCode = 200;
 
             $responseData = array(
-                'id' => $student->getId(),
                 'registroAcademico' => $student->getAcademicRegistry(),
                 'nome' => $student->getName(),
                 'criadoEm' => $student->getCreatedAt(),
@@ -78,11 +80,9 @@ class StudentAdapter {
                     'nome' => $student->getName(),
                     'criadoEm' => $student->getCreatedAt(),
                     'registroAcademico' => $student->getAcademicRegistry(),
-                    'id' => $student->getId(),
                 );
             }
         }
-
 
         return $response->withJson([
             'code' => $statusCode,
@@ -97,6 +97,15 @@ class StudentAdapter {
         $statusCode = 500;
         $message = 'Falha ao excluir estudante.';
         $responseData = array();
+
+        if( $args['registryAcademic'] ){
+            $deleted = $this->deleteService->execute( $args['registryAcademic'] );
+
+            if( $deleted ){
+                $statusCode = 200;
+                $message = 'Estudante '. $args['registryAcademic'] .' excluído com sucesso!';
+            }
+        }
 
         return $response->withJson([
             'code' => $statusCode,

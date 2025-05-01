@@ -17,7 +17,7 @@ $app->get('/', function (Request $request, Response $response, $args) {
 
 $app->get('/students/search[/{name}]', StudentAdapter::class . ':searchStudentsByName' );
 $app->post('/students/create', StudentAdapter::class . ':createStudent' );
-$app->delete('/students/delete', StudentAdapter::class . ':deleteStudent' );
+$app->delete('/students/delete/{registryAcademic}', StudentAdapter::class . ':deleteStudent' );
 
 
 ?>

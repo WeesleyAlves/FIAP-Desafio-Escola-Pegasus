@@ -27,18 +27,16 @@ class CreateStudentService implements CreateStudentServicePort{
 
         $academicRegistry = AcademicRegistryOV::generate();
 
+        $student = StudentEntity::create( $dto->getName(), $academicRegistry );
         $contact = ContactEntity::create( $academicRegistry, $dto->getPhone(), $dto->getEmail() );
-
         $academicHistory = AcademicHistoryEntity::create( $academicRegistry, $dto->getCourseId() );
 
+        $student = $this->studentRepository->storeStudent( $student );
         $contact = $this->studentRepository->storeContact( $contact );
         $academicHistory = $this->studentRepository->storeAcademicHistory( $academicHistory );
 
-        $student = StudentEntity::create( $dto->getName(), $academicRegistry );
         $student->setContact( $contact );
         $student->setAcademicHistory( $academicHistory );
-
-        $student = $this->studentRepository->storeStudent( $student );
 
         return $student;
     }
