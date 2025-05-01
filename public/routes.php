@@ -14,7 +14,7 @@ $app->get('/', function (Request $request, Response $response, $args) {
         ->withHeader('Content-Type', 'application/json');
 });
 
-$app->get('/students/search/{name}', SearchStudentAdapter::class . ':execute' );
+$app->get('/students/search[/{name}]', SearchStudentAdapter::class . ':execute' );
 $app->post('/students/create', CreateStudentAdapter::class . ':execute' );
 
 

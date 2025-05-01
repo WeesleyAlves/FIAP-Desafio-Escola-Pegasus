@@ -51,8 +51,14 @@ class StudentsRepository implements StudentsRepositoryPort{
     public function searchStudentsByName( string $name ): array {
         $students = [];
 
-        $stmt = $this->pdo->prepare("SELECT * from students WHERE name LIKE ? ORDER BY name");
-        $stmt->execute([ '%'.$name.'%' ]);
+        $sql = "SELECT * from students ORDER BY name";
+        
+        if( $name ){
+            $sql = "SELECT * from students WHERE name LIKE ? ORDER BY name";
+        }
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute( $name ? [ '%'.$name.'%' ] : []);
 
         $results = $stmt->fetchAll();
 

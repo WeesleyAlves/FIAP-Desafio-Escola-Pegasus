@@ -20,7 +20,6 @@ class SearchStudentAdapter {
             $message = count( $students ).' estudante(s) encontrado(s)';
             $statusCode = 200;
 
-
             foreach ($students as $key => $student) {
                 $responseData[] = array(
                     'nome' => $student->getName(),
