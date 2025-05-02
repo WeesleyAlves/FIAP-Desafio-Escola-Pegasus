@@ -115,5 +115,19 @@ class StudentAdapter {
         ->withStatus($statusCode)
         ->withHeader('Content-Type', 'application/json');
     }
+
+    public function updateStudent( Request $request, Response $response, $args = [] ): Response{
+        $statusCode = 500;
+        $message = 'Falha ao editar estudante.';
+        $responseData = array();
+
+        return $response->withJson([
+            'code' => $statusCode,
+            'mensagem' => $message,
+            'data' => $responseData,
+        ])
+        ->withStatus($statusCode)
+        ->withHeader('Content-Type', 'application/json');
+    }
 }
 ?>
