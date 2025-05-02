@@ -84,6 +84,8 @@ class StudentAdapter {
                     'nome' => $student->getName(),
                     'criadoEm' => $student->getCreatedAt(),
                     'registroAcademico' => $student->getAcademicRegistry(),
+                    'telefone' => $student->getContact()->getPhone(),
+                    'email' => $student->getContact()->getEmail(),
                 );
             }
         }

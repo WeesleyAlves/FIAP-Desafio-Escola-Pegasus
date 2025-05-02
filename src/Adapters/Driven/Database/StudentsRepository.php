@@ -48,11 +48,22 @@ class StudentsRepository implements StudentsRepositoryPort{
     public function searchStudentsByName( string $name ): array {
         $students = [];
 
-        $sql = "SELECT * from students ORDER BY name";
+        // $sql = "SELECT * from students ORDER BY name";
+
+        $sql = "SELECT 
+                students.academic_registry, students.name, students.created_at, students_contacts.phone, students_contacts.email
+            FROM 
+                students
+            INNER JOIN
+                students_contacts
+            ON 
+                students.academic_registry = students_contacts.academic_registry ";
         
         if( $name ){
-            $sql = "SELECT * from students WHERE name LIKE ? ORDER BY name";
+            $sql .= "WHERE students.name LIKE ? ";
         }
+
+        $sql .= "ORDER BY students.name";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute( $name ? [ '%'.$name.'%' ] : []);
@@ -60,7 +71,17 @@ class StudentsRepository implements StudentsRepositoryPort{
         $results = $stmt->fetchAll();
 
         foreach ($results as $key => $student) {
-            $students[] = StudentEntity::fromArray( $student );
+            $studentEntity = StudentEntity::fromArray( $student );
+
+            $contactEntity = ContactEntity::create(
+                $student['academic_registry'],
+                $student['phone'],
+                $student['email']
+            );
+
+            $studentEntity->setContact( $contactEntity );
+
+            $students[] = $studentEntity;
         }
 
         return $students;
