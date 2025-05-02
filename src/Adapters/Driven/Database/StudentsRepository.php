@@ -115,7 +115,7 @@ class StudentsRepository implements StudentsRepositoryPort{
      * @param string $registryAcademic
      * @return boolean
      */
-    public function deleteSudent( string $registryAcademic ): bool {
+    public function deleteStudent( string $registryAcademic ): bool {
         $stmt = $this->pdo->prepare( "DELETE FROM students WHERE academic_registry = ?" );
         $stmt->execute([$registryAcademic]);
 
@@ -124,6 +124,31 @@ class StudentsRepository implements StudentsRepositoryPort{
         }
 
         return false;
+    }
+
+
+    /**
+     * Atualiza um estudante com base no RA;
+     *
+     * @param StudentEntity $student
+     * @return ?StudentEntity
+     */
+    public function updateStudent( StudentEntity $student ): ?StudentEntity {
+        $stmt = $this->pdo->prepare("UPDATE students SET name = ? WHERE students.academic_registry = ?");
+        $stmt->execute([
+            $student->getName(),
+            $student->getAcademicRegistry(),
+        ]);
+
+        $contact = $student->getContact();
+        $stmt = $this->pdo->prepare("UPDATE students_contacts SET phone = ?, email = ? WHERE students_contacts.academic_registry = ?");
+        $stmt->execute([
+            $contact->getPhone(),
+            $contact->getEmail(),
+            $student->getAcademicRegistry(),
+        ]);
+
+        return $student;
     }
 }
 ?>

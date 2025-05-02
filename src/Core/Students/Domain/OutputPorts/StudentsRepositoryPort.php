@@ -43,7 +43,15 @@ interface StudentsRepositoryPort {
      * @param string $registryAcademic
      * @return boolean
      */
-    public function deleteSudent( string $registryAcademic ): bool;
+    public function deleteStudent( string $registryAcademic ): bool;
+
+    /**
+     * Atualiza um estudante com base no RA;
+     *
+     * @param StudentEntity $student
+     * @return ?StudentEntity
+     */
+    public function updateStudent( StudentEntity $student ): ?StudentEntity;
 }
 
 ?>

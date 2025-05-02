@@ -7,10 +7,12 @@ use Src\Adapters\Driven\Database\StudentsRepository;
 use Src\Core\Students\Application\Services\CreateStudentService;
 use Src\Core\Students\Application\Services\DeleteStudentService;
 use Src\Core\Students\Application\Services\SearchStudentService;
+use Src\Core\Students\Application\Services\UpdateStudentService;
 use Src\Core\Students\Domain\OutputPorts\StudentsRepositoryPort;
 use Src\Core\Students\Application\InputPorts\CreateStudentServicePort;
 use Src\Core\Students\Application\InputPorts\DeleteStudentServicePort;
 use Src\Core\Students\Application\InputPorts\SearchStudentServicePort;
+use Src\Core\Students\Application\InputPorts\UpdateStudentServicePort;
 
 $container = new Container();
 
@@ -30,6 +32,10 @@ $container->set( SearchStudentServicePort::class , function( Container $containe
 
 $container->set( DeleteStudentServicePort::class , function( Container $container ) {
     return new DeleteStudentService( $container->get( StudentsRepositoryPort::class ) );
+});
+
+$container->set( UpdateStudentServicePort::class , function( Container $container ) {
+    return new UpdateStudentService( $container->get( StudentsRepositoryPort::class ) );
 });
 
 $container->set( StudentsRepositoryPort::class , function( Container $container ) {

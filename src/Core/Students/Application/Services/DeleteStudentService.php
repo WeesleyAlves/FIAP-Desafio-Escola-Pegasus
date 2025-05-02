@@ -10,7 +10,7 @@ class DeleteStudentService implements DeleteStudentServicePort {
     public function __construct( private readonly StudentsRepositoryPort $studentsRepository ) {}
 
     public function execute( string $registryAcademic ): bool {
-        return $this->studentsRepository->deleteSudent( $registryAcademic );
+        return $this->studentsRepository->deleteStudent( $registryAcademic );
     }
 }
 ?>

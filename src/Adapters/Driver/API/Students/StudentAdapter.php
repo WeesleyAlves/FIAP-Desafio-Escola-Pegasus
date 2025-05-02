@@ -5,15 +5,19 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Src\Core\Students\Application\DTOs\CreateStudentDTO;
+
+use Src\Core\Students\Application\DTOs\UpdateStudentDTO;
 use Src\Core\Students\Application\InputPorts\CreateStudentServicePort;
 use Src\Core\Students\Application\InputPorts\DeleteStudentServicePort;
 use Src\Core\Students\Application\InputPorts\SearchStudentServicePort;
+use Src\Core\Students\Application\InputPorts\UpdateStudentServicePort;
 
 class StudentAdapter {
     public function __construct(
         private readonly CreateStudentServicePort $createService,
         private readonly SearchStudentServicePort $searchService,
         private readonly DeleteStudentServicePort $deleteService,
+        private readonly UpdateStudentServicePort $updateService,
     ) {}
 
     /**
@@ -120,6 +124,30 @@ class StudentAdapter {
         $statusCode = 500;
         $message = 'Falha ao editar estudante.';
         $responseData = array();
+
+        $body = $request->getParsedBody();
+
+        $dto = new UpdateStudentDTO(
+            $args['registryAcademic'] ?? '',
+            $body['name'] ?? '',
+            $body['phone'] ?? '',
+            $body['email'] ?? '',
+        );
+
+        $result = $this->updateService->execute( $dto );
+
+        if( $result ){
+            $statusCode = 200;
+            $message = 'Estudante editado com sucesso.';
+
+            $contact = $result->getContact();
+
+            $responseData = array(
+                'nome' => $result->getName(),
+                'telefone' => $contact->getPhone(),
+                'email' => $contact->getEmail()
+            );
+        }
 
         return $response->withJson([
             'code' => $statusCode,
